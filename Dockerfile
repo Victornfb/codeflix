@@ -1,7 +1,13 @@
 FROM node:18.0-slim
 
-USER node
+RUN npm install -g pnpm
 
 WORKDIR "/home/node/app"
 
-CMD ["sh", "-c", "npm install && tail -f /dev/null"]
+COPY ["package.json", "pnpm-lock.yaml", "tsconfig.json" ,"./"]
+
+RUN pnpm install
+
+USER node
+
+CMD ["sh", "-c", "tail -f /dev/null"]
